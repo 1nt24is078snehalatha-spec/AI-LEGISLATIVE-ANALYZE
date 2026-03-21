@@ -1,0 +1,6 @@
+flask
+flask-cors
+pdfplumber
+sentence-transformers
+langchain-text-splitters
+spacy
