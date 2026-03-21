@@ -10,47 +10,50 @@ from summarizer import generate_summary
 
 app = Flask(__name__)
 CORS(app)
-
-# -------------------------------
-# LOAD PDF
-# -------------------------------
-print("Loading PDF...")
-
-text = ""
-with pdfplumber.open("documents/it_act_2000.pdf") as pdf:
-    for page in pdf.pages:
-        t = page.extract_text()
-        if t:
-            text += t.lower()
-
-print("PDF Loaded ✅")
-
-# -------------------------------
-# SMART CHUNKING (SECTION BASED)
-# -------------------------------
-sections = re.split(r'(section\s+\d+)', text)
-
 chunks = []
-for i in range(1, len(sections), 2):
-    chunk = sections[i] + sections[i+1]
-    chunks.append(chunk)
+embeddings = []
+data_loaded = False
+def load_data():
+    global chunks, embeddings, data_loaded
 
-print("Total chunks:", len(chunks))
+    print("Loading PDF...")
 
-# -------------------------------
-# CREATE EMBEDDINGS (AI)
-# -------------------------------
-print("Creating embeddings...")
-embeddings = create_embeddings(chunks)
-print("Embeddings ready ✅")
+    text = ""
+    with pdfplumber.open("documents/it_act_2000.pdf") as pdf:
+        for page in pdf.pages:
+            t = page.extract_text()
+            if t:
+                text += t.lower()
+
+    print("PDF Loaded ✅")
+
+    sections = re.split(r'(section\s+\d+)', text)
+
+    chunks = []
+    for i in range(1, len(sections), 2):
+        chunk = sections[i] + sections[i+1]
+        chunks.append(chunk)
+
+    print("Total chunks:", len(chunks))
+
+    print("Creating embeddings...")
+    embeddings = create_embeddings(chunks)
+    print("Embeddings ready ✅")
+
+    data_loaded = True
 
 # -------------------------------
 # COMMON PROCESS FUNCTION (DRY)
 # -------------------------------
 def process_query(query):
+    global data_loaded
+
+    # 🔥 Load data only once
+    if not data_loaded:
+        load_data()
+
     matched_chunks = search(query, chunks, embeddings)
     results = []
-
     for chunk in matched_chunks:
         compressed = compress_text(chunk)
         summary = generate_summary(compressed, query)
@@ -152,9 +155,9 @@ def ui():
 # -------------------------------
 # HOME ROUTE
 # -------------------------------
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def home():
-    return "AI Legislative Analyzer Backend Running 🚀"
+    return ui()
 
 
 # -------------------------------
