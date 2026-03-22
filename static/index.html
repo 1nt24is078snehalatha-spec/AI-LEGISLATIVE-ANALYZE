@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LexAI — Legislative Intelligence</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg-layer">
+    <div class="bg-circle c1"></div>
+    <div class="bg-circle c2"></div>
+    <div class="bg-circle c3"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <span class="logo-icon">⚖</span>
+      <span class="logo-text">Lex<em>AI</em></span>
+    </div>
+    <div class="nav-tag">IT Act 2000 · Intelligent Search</div>
+    <div class="nav-badge">
+      <span class="pulse-dot"></span> Live
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <p class="hero-eyebrow">AI-Powered Legal Intelligence</p>
+    <h1 class="hero-title">Understand the Law<br /><em>Instantly.</em></h1>
+    <p class="hero-subtitle">Query India's Information Technology Act, 2000 — get summaries, penalties, rights, and key clauses in seconds.</p>
+
+    <!-- Search Box -->
+    <div class="search-wrapper" id="searchWrapper">
+      <div class="search-box">
+        <span class="search-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <input
+          type="text"
+          id="queryInput"
+          class="search-input"
+          placeholder="e.g. What are the penalties for hacking?"
+          autocomplete="off"
+        />
+        <button class="search-btn" id="searchBtn" onclick="runSearch()">
+          <span class="btn-text">Analyze</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </div>
+      <div class="search-suggestions">
+        <span class="sugg-label">Try:</span>
+        <button class="sugg-chip" onclick="fillQuery('cyber crime penalties')">cyber crime penalties</button>
+        <button class="sugg-chip" onclick="fillQuery('digital signature validity')">digital signature</button>
+        <button class="sugg-chip" onclick="fillQuery('data privacy rights')">data privacy rights</button>
+        <button class="sugg-chip" onclick="fillQuery('hacking punishment')">hacking punishment</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Loader -->
+  <div class="loader-wrap" id="loaderWrap" style="display:none;">
+    <div class="loader-ring"></div>
+    <p class="loader-text">Analyzing legislation<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+  </div>
+
+  <!-- Results -->
+  <main class="results-section" id="resultsSection" style="display:none;">
+    <div class="results-header">
+      <h2 class="results-title">Results <span id="resultCount" class="result-count-badge"></span></h2>
+      <p class="results-query">Query: "<span id="displayQuery"></span>"</p>
+    </div>
+    <div class="results-grid" id="resultsGrid"></div>
+  </main>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <div class="empty-icon">🔍</div>
+    <p>No results found. Try rephrasing your query.</p>
+  </div>
+
+  <!-- Features Section -->
+  <section class="features" id="featuresSection">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feat-icon">🧠</div>
+        <h3>AI Summaries</h3>
+        <p>Plain-language explanations of complex legal sections, generated instantly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">🚨</div>
+        <h3>Penalties</h3>
+        <p>Know the legal consequences — fines, imprisonment terms, and liabilities.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">🛡️</div>
+        <h3>Your Rights</h3>
+        <p>Understand what protections and rights the IT Act grants to you.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">🏷️</div>
+        <h3>Key Terms</h3>
+        <p>Extracted legal keywords so you can dig deeper into related topics.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span>LexAI · Built on India's IT Act 2000 · Powered by AI</span>
+    <span class="footer-sep">·</span>
+    <span>Not a substitute for legal advice</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
